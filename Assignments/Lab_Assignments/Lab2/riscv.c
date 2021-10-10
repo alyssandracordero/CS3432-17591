@@ -83,7 +83,7 @@ char* rm_first_char(char* original){
 //instr is user input string
 
 bool interpret(char* instr){
-	int suk;
+
 	bool successful_op = false; 
 	instructions = tokenize(instr);//tokenize user input
 	if(equals( "ADD", instructions[0])){
@@ -177,7 +177,9 @@ bool interpret(char* instr){
 	else{
 		is_done = true;
 		printf("THAT INSTRUCTION DOES NOT EXISTS\n");//SUCCESSFUL_OP STILL FALSE
+		return;
 	}
+	is_done = true;
 	return successful_op;
 }
 
@@ -200,12 +202,7 @@ void write_read_demo(){
 
 	printf("Read address %lu (0x%lX): %lu (0x%lX)\n", address, address, read, read); // %lu -> format as an long-unsigned
 }
-
-/**
- * Your code goes in the main
- *
- */
-
+//main()
 int main(){
 	// Do not write any code between init_regs
 	init_regs(); // DO NOT REMOVE THIS LINE
@@ -216,30 +213,14 @@ int main(){
 	input = malloc(1000 * sizeof(char));//allocate memory for input
 	
 	bool is_null = false;
-	//fgets() returns null if EOF is reached.
-		//while(!is_null){
-	//	interpret(input);
-
-	//is_null = fgets(input, 1000, stdin) == NULL;
-	//}
-	//fgets(input, input_size, stdin);
-	//bool is_done = false;  
+	is_null = fgets(input, 1000, stdin) == NULL;
+	 
 	while(!is_null && !is_done){//while input is NOT NULL
-//		printf("HEELLO!\n%s\n", *input);
-		//char* eof = "EOF";
-		//if(equals(eof, *input)){
-	//	//printf("ESTOY EN EOF!");
-		//	is_done = true;
-		//}else{
 		interpret(input);//if instruction exists
 		printf("\n");
 		print_regs();
 		printf("\n");	
 		is_null = fgets(input, 1000, stdin) == NULL;
-		//}
-		//else{
-	//	printf("ESTOY EN SIN INPUT\n");
-		//}
 	}
 	printf("Good bye!\n");
 	free(input);//free input
